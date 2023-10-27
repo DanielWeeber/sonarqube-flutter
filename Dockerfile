@@ -15,6 +15,6 @@ RUN wget https://dl.google.com/android/repository/commandlinetools-linux-6609375
   && unzip commandlinetools-linux-6609375_latest.zip -d cmdline-tools \
   && mkdir --parents "$ANDROID_HOME/cmdline-tools/latest" \
   && mv cmdline-tools/* "$ANDROID_HOME/cmdline-tools/latest/"
-RUN flutter doctor --android-licenses --disable-telemetry
+RUN /opt/sonarqube/extensions/flutter/bin/flutter doctor --android-licenses --disable-telemetry
 
 USER sonarqube
