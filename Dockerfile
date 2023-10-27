@@ -16,9 +16,9 @@ RUN wget https://dl.google.com/android/repository/commandlinetools-linux-6609375
   && mv cmdline-tools/* "$ANDROID_HOME/cmdline-tools/latest/"
 RUN wget https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.9-stable.tar.xz \
   && tar xf flutter_linux_3.13.9-stable.tar.xz \
-  && mv flutter /opt/sonarqube/extensions/flutter \
-  && chown -R sonarqube:sonarqube /opt/sonarqube/extensions/flutter
+  && mv flutter /opt/flutter \
+  && chown -R sonarqube:sonarqube /opt/flutter
 RUN /opt/sonarqube/extensions/flutter/bin/flutter doctor --android-licenses --disable-telemetry
-RUN git config --global --add safe.directory /opt/sonarqube/extensions/flutter
+RUN git config --global --add safe.directory /opt/flutter
 
 USER sonarqube
