@@ -9,12 +9,16 @@ RUN add-apt-repository ppa:maarten-fonville/android-studio -y
 RUN apt-get update \
   && apt-get install git curl file unzip xz-utils zip libglu1-mesa android-studio clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev android-sdk chromium-bsu -y \
   && mkdir -p /home/sonarqube/.config \
-  && chown -R sonarqube:sonarqube /home/sonarqube \
-  && git config --global --add safe.directory /opt/sonarqube/extensions/flutter
+  && chown -R sonarqube:sonarqube /home/sonarqube
 RUN wget https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip \
   && unzip commandlinetools-linux-6609375_latest.zip -d cmdline-tools \
   && mkdir --parents "$ANDROID_HOME/cmdline-tools/latest" \
   && mv cmdline-tools/* "$ANDROID_HOME/cmdline-tools/latest/"
+RUN wget https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.9-stable.tar.xz \
+  && tar xf flutter_linux_3.13.9-stable.tar.xz \
+  && mv flutter /opt/sonarqube/extensions/flutter \
+  && chown -R sonarqube:sonarqube /opt/sonarqube/extensions/flutter
 RUN /opt/sonarqube/extensions/flutter/bin/flutter doctor --android-licenses --disable-telemetry
+RUN git config --global --add safe.directory /opt/sonarqube/extensions/flutter
 
 USER sonarqube
