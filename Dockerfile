@@ -3,11 +3,13 @@ FROM sonarqube:latest
 MAINTAINER Daniel Weeber <daniel.weeber@twt.de>
 ENV ANDROID_HOME /usr/lib/android-sdk
 USER root
+RUN wget -qO- https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/dart.gpg \
+  && echo 'deb [signed-by=/usr/share/keyrings/dart.gpg arch=amd64] https://storage.googleapis.com/download.dartlang.org/linux/debian stable main' > /etc/apt/sources.list.d/dart_stable.list
 RUN apt-get update \
-  && apt-get install software-properties-common -y
+  && apt-get install software-properties-common apt-transport-https -y
 RUN add-apt-repository ppa:maarten-fonville/android-studio -y
 RUN apt-get update \
-  && apt-get install git curl file unzip xz-utils zip libglu1-mesa android-studio clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev android-sdk chromium-bsu -y \
+  && apt-get install dart gpg git curl file unzip xz-utils zip libglu1-mesa android-studio clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev android-sdk chromium-bsu -y \
   && mkdir -p /home/sonarqube/.config \
   && chown -R sonarqube:sonarqube /home/sonarqube
 RUN wget https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip \
