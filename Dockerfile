@@ -20,7 +20,7 @@ RUN wget https://storage.googleapis.com/flutter_infra_release/releases/stable/li
   && tar xf flutter_linux_3.13.9-stable.tar.xz \
   && mv flutter /opt/flutter \
   && chown -R sonarqube:sonarqube /opt/flutter
-RUN /opt/flutter/bin/flutter doctor --android-licenses --disable-telemetry
 RUN git config --global --add safe.directory /opt/flutter
 
 USER sonarqube
+RUN /opt/flutter/bin/flutter doctor --android-licenses --disable-telemetry
